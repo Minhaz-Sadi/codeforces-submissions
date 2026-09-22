@@ -102,17 +102,43 @@ vector<pair<int, int>> movements = {
 const int N = 210;
 const int INF = 1e9+10;
 
+int n;
+vi v; 
+int dp[105][3];
+
+int findRest(int day, int prevDay){
+
+    if(day == n) return 0;
+
+    if(dp[day][prevDay] != -1) return dp[day][prevDay];
 
 
+    int ans = INF;
+
+    ans = min(ans, 1 + findRest(day + 1, 0));
+
+    if((v[day] == 1 || v[day] == 3) && prevDay != 1){
+        ans = min(ans, findRest(day + 1, 1));
+    }
+    if((v[day] == 2 || v[day] == 3) && prevDay != 2){
+        ans = min(ans, findRest(day + 1, 2));
+    }
+
+    return dp[day][prevDay] = ans;
+}
 
 void solve() {
 
 
-    test{
-      
-        
-        
-    }
+    cin >> n;
+    v.resize(n);
+    for(int i = 0; i < n; i++) cin >> v[i];
+
+    memset(dp, -1, sizeof(dp));
+
+    cout<<findRest(0, 0);
+
+    
 }
 
    
